@@ -2,15 +2,15 @@ openapi: 3.0.0
 
 info:
   title: Ntsctsf_QoSandTSCAssistance Service API
-  version: 1.1.0
+  version: 1.1.1
   description: |
     TSCTSF QoS and TSC Assistance Service.  
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  
     All rights reserved.
 
 externalDocs:
   description: >
-    3GPP TS 29.565 V18.6.0; 5G System; Time Sensitive Communication and Time Synchronization function 
+    3GPP TS 29.565 V18.10.0; 5G System; Time Sensitive Communication and Time Synchronization function 
     Services; Stage 3.
   url: 'https://www.3gpp.org/ftp/Specs/archive/29_series/29.565/'
 

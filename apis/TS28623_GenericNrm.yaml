@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
   title: Generic NRM
-  version: 18.9.0
+  version: 19.5.0
   description: >-
     OAS 3.0.1 definition of the Generic NRM
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 externalDocs:
   description: 3GPP TS 28.623; Generic NRM
@@ -15,12 +15,10 @@ components:
 
 #-------- Definition of types-----------------------------------------------------
 
-    RegistrationState:
-      type: string
-      enum:
-        - REGISTERED
-        - DEREGISTERED
-    VnfParameter:
+
+    VnfParameters:
+      description: ->
+        This <<dataType>> represents the parameter set of the VNF instance(s) corresponding to an NE.
       type: object
       properties:
         vnfInstanceId:
@@ -31,12 +29,13 @@ components:
           type: string
         autoScalable:
           type: boolean
-    PeeParameter:
+          default: FALSE
+    PeeParameters:
+      description: ->
+        This <<dataType>> represents the parameter list for the control and monitoring of power, energy and environmental parameters.
       type: object
       properties:
         siteIdentification:
-          type: string
-        siteDescription:
           type: string
         siteLatitude:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Latitude'
@@ -45,109 +44,14 @@ components:
         siteAltitude:
           type: number
           format: float
+        siteDescription:
+          type: string  
         equipmentType:
           type: string
         environmentType:
           type: string
         powerInterface:
           type: string
-    Operation:
-      type: object
-      properties:
-        name:
-          type: string
-        allowedNFTypes:
-          $ref: '#/components/schemas/NFType'
-        operationSemantics:
-          $ref: '#/components/schemas/OperationSemantics'
-    NFType:
-      type: string
-      description: ' NF name defined in TS 23.501 or TS 29.510'
-      enum:
-        - NRF
-        - UDM
-        - AMF
-        - SMF
-        - AUSF
-        - NEF
-        - PCF
-        - SMSF
-        - NSSF
-        - UDR
-        - LMF
-        - GMLC
-        - 5G_EIR
-        - SEPP
-        - UPF
-        - N3IWF
-        - AF
-        - UDSF
-        - DN
-        - BSF
-        - CHF
-        - NWDAF
-        - PCSCF
-        - CBCF
-        - HSS
-        - UCMF
-        - SOR_AF
-        - SPAF
-        - MME
-        - SCSAS
-        - SCEF
-        - SCP
-        - NSSAAF
-        - ICSCF
-        - SCSCF
-        - DRA
-        - IMS_AS
-        - AANF
-        - 5G_DDNMF
-        - NSACF
-        - MFAF
-        - EASDF
-        - DCCF
-        - MB_SMF
-        - TSCTSF
-        - ADRF
-        - GBA_BSF
-        - CEF
-        - MB_UPF
-        - NSWOF
-        - PKMF
-        - MNPF
-        - SMS_GMSC
-        - SMS_IWMSC
-        - MBSF
-        - MBSTF
-        - PANF
-        - TNGF
-        - W_AGF
-        - TWIF
-        - TSN_AF
-
-    OperationSemantics:
-      type: string
-      enum:
-        - REQUEST_RESPONSE
-        - SUBSCRIBE_NOTIFY
-    SAP:
-      type: object
-      properties:
-        host:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/HostAddr'
-        port:
-          type: integer
-    NFServiceType:
-      type: string
-      enum:
-        - Namf_Communication
-        - Namf_EventExposure
-        - Namf_MT
-        - Namf_Location
-        - Nsmf_PDUSession
-        - Nsmf_EventExposure
-        - Others
     TransportProtocol:
       anyOf:
         - type: string
@@ -159,26 +63,35 @@ components:
       properties:
         performanceMetrics:
           type: array
+          uniqueItems: true
           items:
             type: string
+          readOnly: true 
+          minItems: 1 
         granularityPeriods:
           type: array
+          uniqueItems: true
           items:
             type: integer
             minimum: 1
+          readOnly: true  
         reportingMethods:
           type: array
+          uniqueItems: true
           items:
             type: string
             enum:
              - FILE_BASED_LOC_SET_BY_PRODUCER
              - FILE_BASED_LOC_SET_BY_CONSUMER
-             - STREAM_BASED 
+             - STREAM_BASED
+            readOnly: true               
         reportingPeriods:
           type: array
+          uniqueItems: true
           items:
             type: integer
             minimum: 1
+          readOnly: true  
     ReportingCtrl:
       oneOf:
         - type: object
@@ -201,7 +114,6 @@ components:
           properties:
             streamTarget:
               $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Uri'
-
     ProcessMonitor:
       description: >-
         This data type is the "ProcessMonitor" data type without specialisations.
@@ -209,6 +121,7 @@ components:
       properties:
         id:
           type: string
+          readOnly: true
         status:
           type: string
           enum:
@@ -219,38 +132,77 @@ components:
             - PARTIALLY_FAILED
             - CANCELLING
             - CANCELLED
+          readOnly: true            
         progressPercentage:
           type: integer
           minimum: 0
           maximum: 100
+          readOnly: true          
         progressStateInfo:
           type: string
+          readOnly: true
         resultStateInfo:
           type: string
+          readOnly: true
         startTime:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTime'
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTimeRo'
         endTime:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTime'
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTimeRo'
         timer:
           type: integer
     AreaScope:
       allOf:
       - type: array
         items:
-          $ref: '#/components/schemas/NpnId-Type'
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_NrNrm.yaml#/components/schemas/PlmnInfoList'
+        maxItems: 16384
       - oneOf:
         - type: array
           items:
             $ref: '#/components/schemas/EutraCellId'
+          minItems: 1
+          maxItems: 32
+        - type: object
+          properties: 
+            nrCellId:
+              type: array
+              items:
+                $ref: '#/components/schemas/NrCellId'
+              minItems: 1
+              maxItems: 32
+            nPNIdentityList:
+              type: array
+              items:
+                $ref: '#/components/schemas/NpnId-Type'
+        - type: object
+          properties: 
+            tacList:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tac'
+              minItems: 1
+              maxItems: 8
+            cAGIdList:
+              type: array
+              items:
+                $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/CagId'
+              maxItems: 256
+        - type: object
+          properties: 
+            taList:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tai'
+              minItems: 1
+              maxItems: 8
+            nPNIdentityList:
+              type: array
+              items:
+                $ref: '#/components/schemas/NpnId-Type'
         - type: array
           items:
-            $ref: '#/components/schemas/NrCellId'
-        - type: array
-          items:
-            $ref: '#/components/schemas/Tac'
-        - type: array
-          items:
-            $ref: '#/components/schemas/Tai'
+            $ref: '#/components/schemas/NpnId-Type'
+          minItems: 1
     Tai:
       type: object
       properties:
@@ -261,8 +213,8 @@ components:
         tac:
           $ref: '#/components/schemas/Tac'
     Tac:
-      type: string
-      pattern: '(^[A-Fa-f0-9]{4}$)|(^[A-Fa-f0-9]{6}$)'
+      type: string 
+      pattern: '(^[A-Fa-f0-9]{4}$)|(^[A-Fa-f0-9]{6}$)'   
     EutraCellId:
       type: string
       pattern: '^[A-Fa-f0-9]{7}$'
@@ -281,16 +233,19 @@ components:
           properties:
             timeIntervals:
               type: array
+              uniqueItems: true
               items:
                 $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/TimeInterval'
         - type: object
           properties:
             timeIntervals:
               type: array
+              uniqueItems: true
               items:
                 $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/TimeInterval'
             daysOfWeek:
               type: array
+              uniqueItems: true
               items:
                 type: string
                 enum:
@@ -301,14 +256,18 @@ components:
                   - FRIDAY
                   - SATURDAY
                   - SUNDAY
+                minItems: 1
+                maxItems: 7
         - type: object
           properties:
             timeIntervals:
               type: array
+              uniqueItems: true
               items:
                 $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/TimeInterval'
             daysOfMonth:
               type: array
+              uniqueItems: true
               items:
                 type: integer
                 minimum: 0
@@ -320,15 +279,15 @@ components:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/PlmnId'
         cAGIdList:
           type: array
+          uniqueItems: true
           items:
-            type: string
-          minItems: 1
+            $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/CagId'
           maxItems: 256  
         nIDList:
           type: array
+          uniqueItems: true
           items:
             $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Nid'
-          minItems: 1
           maxItems: 16
       oneOf:
         - required: [plmnId, cAGIdList]
@@ -380,16 +339,22 @@ components:
           type: string
         setOfMcc:
           type: array
+          uniqueItems: true
           items:
             $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Mcc'
+          readOnly: true
+          minItems: 1
         priorityLabel:
           type: integer
+          readOnly: true
         supportedPerfMetricGroups:
           type: array
+          uniqueItems: true
           items:
             $ref: '#/components/schemas/SupportedPerfMetricGroup'
         supportedTraceMetrics:
           type: array
+          uniqueItems: true
           items:
             type: string
     ManagedElement-Attr:
@@ -399,6 +364,7 @@ components:
           type: string
         managedElementTypeList:
           type: array
+          uniqueItems: true
           items:
             type: string
         userLabel:
@@ -409,20 +375,25 @@ components:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DnList'
         vendorName:
           type: string
+          readOnly: true
         userDefinedState:
           type: string
         swVersion:
           type: string
+          readOnly: true
         priorityLabel:
           type: integer
         supportedPerfMetricGroups:
           type: array
+          uniqueItems: true
           items:
             $ref: '#/components/schemas/SupportedPerfMetricGroup'
         supportedTraceMetrics:
           type: array
+          uniqueItems: true
           items:
             type: string
+          readOnly: true  
 
     SubNetwork-ncO:
       type: object
@@ -437,60 +408,30 @@ components:
           $ref: '#/components/schemas/MnsAgent-Multiple'
         MeContext:
           $ref: '#/components/schemas/MeContext-Multiple'
-        PerfMetricJob:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_PmControlNrm.yaml#/components/schemas/PerfMetricJob-Multiple'
-        ThresholdMonitor:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ThresholdMonitorNrm.yaml#/components/schemas/ThresholdMonitor-Multiple'
-        TraceJob:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_TraceControlNrm.yaml#/components/schemas/TraceJob-Multiple'
-        ManagementDataCollection:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ManagementDataCollectionNrm.yaml#/components/schemas/ManagementDataCollection-Multiple'
-        NtfSubscriptionControl:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_SubscriptionControlNrm.yaml#/components/schemas/NtfSubscriptionControl-Multiple'
         AlarmList:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28111_FaultNrm.yaml#/components/schemas/AlarmList-Single'
-        FileDownloadJob:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_FileManagementNrm.yaml#/components/schemas/FileDownloadJob-Multiple'
-        Files:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_FileManagementNrm.yaml#/components/schemas/Files-Multiple'
-        MnsRegistry:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_MnSRegistryNrm.yaml#/components/schemas/MnsRegistry-Single'
         Scheduler:
           $ref: '#/components/schemas/Scheduler-Multiple'
         ConditionMonitor:
           $ref: '#/components/schemas/ConditionMonitor-Multiple'
         SupportedNotifications:
           $ref: '#/components/schemas/SupportedNotifications-Single'
-        QMCJobs:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_QoEMeasurementCollectionNrm.yaml#/components/schemas/QMCJob-Multiple'
+
 
     ManagedElement-ncO:
       type: object
       properties:
         MnsAgent:
           $ref: '#/components/schemas/MnsAgent-Multiple'
-        PerfMetricJob:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_PmControlNrm.yaml#/components/schemas/PerfMetricJob-Multiple'
-        ThresholdMonitor:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ThresholdMonitorNrm.yaml#/components/schemas/ThresholdMonitor-Multiple'
-        TraceJob:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_TraceControlNrm.yaml#/components/schemas/TraceJob-Multiple'
-        NtfSubscriptionControl:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_SubscriptionControlNrm.yaml#/components/schemas/NtfSubscriptionControl-Multiple'
         AlarmList:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28111_FaultNrm.yaml#/components/schemas/AlarmList-Single'
-        FileDownloadJob:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_FileManagementNrm.yaml#/components/schemas/FileDownloadJob-Multiple'
-        Files:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_FileManagementNrm.yaml#/components/schemas/Files-Multiple'
         Scheduler:
           $ref: '#/components/schemas/Scheduler-Multiple'
         ConditionMonitor:
           $ref: '#/components/schemas/ConditionMonitor-Multiple'
         SupportedNotifications:  
           $ref: '#/components/schemas/SupportedNotifications-Single'
-        QMCJobs:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_QoEMeasurementCollectionNrm.yaml#/components/schemas/QMCJob-Multiple'
+
 
 #-------- Definition of abstract IOCs --------------------------------------------
 
@@ -501,20 +442,24 @@ components:
           type: string
         vnfParametersList:
           type: array
+          uniqueItems: true
           items:
-            $ref: '#/components/schemas/VnfParameter'
+            $ref: '#/components/schemas/VnfParameters'
         peeParametersList:
           type: array
+          uniqueItems: true
           items:
-            $ref: '#/components/schemas/PeeParameter'
+            $ref: '#/components/schemas/PeeParameters'
         priorityLabel:
           type: integer
         supportedPerfMetricGroups:
           type: array
+          uniqueItems: true
           items:
             $ref: '#/components/schemas/SupportedPerfMetricGroup'
         supportedTraceMetrics:
           type: array
+          uniqueItems: true
           items:
             type: string
     EP_RP-Attr:
@@ -524,8 +469,10 @@ components:
           type: string
         farEndEntity:
           type: string
+          readOnly: true
         supportedPerfMetricGroups:
           type: array
+          uniqueItems: true
           items:
             $ref: '#/components/schemas/SupportedPerfMetricGroup'
 
@@ -536,8 +483,6 @@ components:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_PmControlNrm.yaml#/components/schemas/PerfMetricJob-Multiple'
         ThresholdMonitor:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ThresholdMonitorNrm.yaml#/components/schemas/ThresholdMonitor-Multiple'
-        ManagedNFService:
-          $ref: '#/components/schemas/ManagedNFService-Multiple'
         TraceJob:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_TraceControlNrm.yaml#/components/schemas/TraceJob-Multiple'
 
@@ -553,38 +498,15 @@ components:
           properties:
             vsDataType:
               type: string
+              readOnly: true
             vsDataFormatVersion:
               type: string
+              readOnly: true
             vsData:
               nullable: true
         VsDataContainer:
           $ref: '#/components/schemas/VsDataContainer-Multiple'
-    ManagedNFService-Single:
-      allOf:
-        - $ref: '#/components/schemas/Top'
-        - type: object
-          properties:
-            attributes:
-              type: object
-              properties:
-                userLabel:
-                  type: string
-                nFServiceType:
-                  $ref: '#/components/schemas/NFServiceType'
-                sAP:
-                  $ref: '#/components/schemas/SAP'
-                operations:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Operation'
-                administrativeState:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/AdministrativeState'
-                operationalState:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/OperationalState'
-                usageState:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/UsageState'
-                registrationState:
-                  $ref: '#/components/schemas/RegistrationState'
+
     ManagementNode-Single:
       allOf:
         - $ref: '#/components/schemas/Top'
@@ -599,12 +521,15 @@ components:
                   $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DnList'
                 vendorName:
                   type: string
+                  readOnly: true
                 userDefinedState:
                   type: string
                 locationName:
                   type: string
+                  readOnly: true
                 swVersion:
                   type: string
+                  readOnly: true
             MnsAgent:
               $ref: '#/components/schemas/MnsAgent-Multiple'
     MnsAgent-Single:
@@ -616,7 +541,7 @@ components:
               type: object
               properties:
                 systemDN:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Dn'
+                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DnRo'
     MeContext-Single:
       allOf:
         - $ref: '#/components/schemas/Top'
@@ -627,6 +552,7 @@ components:
               properties:
                 dnPrefix:
                   type: string
+                  readOnly: true
     Scheduler-Single:
       allOf:
         - $ref: '#/components/schemas/Top'
@@ -637,11 +563,13 @@ components:
               properties:
                 schedulingTimes:
                   type: array
+                  uniqueItems: true
                   items:
                     $ref: '#/components/schemas/SchedulingTime'
                   minItems: 1
                 schedulerStatus:
                   type: boolean
+                  readOnly: true
     ConditionMonitor-Single:
       allOf:
         - $ref: '#/components/schemas/Top'
@@ -654,6 +582,7 @@ components:
                   type: string
                 conditionStatus:
                   type: boolean
+                  readOnly: true
 
     SupportedNotifications-Single:
       allOf:
@@ -665,16 +594,19 @@ components:
               properties:
                 notificationTypes:
                   type: array
+                  uniqueItems: true
                   items:
                     $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/NotificationType'
                 notificationProtocols:
                   type: array
+                  uniqueItems: true
                   items:
                     type: string
                     enum:
                       - HTTP
                       - HTTP_VES_ENCAPS
                     minItems: 1
+                  readOnly: true  
 
 
     SubNetwork-Single:
@@ -682,6 +614,16 @@ components:
         - $ref: '#/components/schemas/Top' 
         - $ref: '#/components/schemas/SubNetwork-Attr'
         - $ref: '#/components/schemas/SubNetwork-ncO'
+        - $ref: '#/components/schemas/SubNetwork-Multiple'
+        - $ref: '#/components/schemas/ManagedElement-Multiple'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_FileManagementNrm.yaml#/components/schemas/SubNetwork-ncO-FileManagementNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_PmControlNrm.yaml#/components/schemas/SubNetwork-ncO-PmControlNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_SubscriptionControlNrm.yaml#/components/schemas/SubNetwork-ncO-SubscriptionControlNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ThresholdMonitorNrm.yaml#/components/schemas/SubNetwork-ncO-ThresholdMonitorNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_TraceControlNrm.yaml#/components/schemas/SubNetwork-ncO-TraceControlNrm'                
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_QoEMeasurementCollectionNrm.yaml#/components/schemas/SubNetwork-ncO-QoEMeasurementCollectionNrm'                    
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ManagementDataCollectionNrm.yaml#/components/schemas/SubNetwork-ncO-ManagementDataCollectionNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_MnSRegistryNrm.yaml#/components/schemas/SubNetwork-ncO-MnSRegistryNrm'           
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28104_MdaNrm.yaml#/components/schemas/SubNetwork-ncO-MdaNrm'
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28105_AiMlNrm.yaml#/components/schemas/SubNetwork-ncO-AiMlNrm'
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28312_IntentNrm.yaml#/components/schemas/SubNetwork-ncO-IntentNrm'
@@ -692,12 +634,19 @@ components:
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_NrNrm.yaml#/components/schemas/SubNetwork-ncO-NrNrm'
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_5GcNrm.yaml#/components/schemas/SubNetwork-ncO-5GcNrm'
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28318_DsoNrm.yaml#/components/schemas/SubNetwork-ncO-DsoNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28310_EnergyInformationNrm.yaml#/components/schemas/SubNetwork-ncO-EnergyInformationNrm'    
 
     ManagedElement-Single:
       allOf:
         - $ref: '#/components/schemas/Top'
         - $ref: '#/components/schemas/ManagedElement-Attr'
         - $ref: '#/components/schemas/ManagedElement-ncO'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_FileManagementNrm.yaml#/components/schemas/ManagedElement-ncO-FileManagementNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_PmControlNrm.yaml#/components/schemas/ManagedElement-PmControlNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_SubscriptionControlNrm.yaml#/components/schemas/ManagedElement-ncO-SubscriptionControlNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ThresholdMonitorNrm.yaml#/components/schemas/ManagedElement-ncO-ThresholdMonitorNrm'
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_TraceControlNrm.yaml#/components/schemas/SubNetwork-ncO-TraceControlNrm'                            
+        - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_QoEMeasurementCollectionNrm.yaml#/components/schemas/ManagedElement-ncO-QoEMeasurementCollectionNrm'                             
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28104_MdaNrm.yaml#/components/schemas/ManagedElement-ncO-MdaNrm'
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28105_AiMlNrm.yaml#/components/schemas/ManagedElement-ncO-AiMlNrm'
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28536_CoslaNrm.yaml#/components/schemas/ManagedElement-ncO-CoslaNrm'
@@ -721,10 +670,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/VsDataContainer-Single'
-    ManagedNFService-Multiple:
-      type: array
-      items:
-        $ref: '#/components/schemas/ManagedNFService-Single'
     ManagementNode-Multiple:
       type: array
       items:
@@ -764,7 +709,6 @@ components:
        - $ref: '#/components/schemas/ManagementNode-Single'
        - $ref: '#/components/schemas/MnsAgent-Single'
        - $ref: '#/components/schemas/MeContext-Single'
-       - $ref: '#/components/schemas/ManagedNFService-Single'
        - $ref: '#/components/schemas/Scheduler-Single'
        - $ref: '#/components/schemas/ConditionMonitor-Single'
        - $ref: '#/components/schemas/SupportedNotifications-Single' 

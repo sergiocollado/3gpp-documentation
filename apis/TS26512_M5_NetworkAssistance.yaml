@@ -1,10 +1,9 @@
 openapi: 3.0.0
-
 info:
-  title: M5_NetworkAssistance (deprecated)
-  version: 3.0.2
+  title: M5_NetworkAssistance
+  version: 3.0.4
   description: |
-    5GMS AF M5 Network Assistance API
+    5GMS AF M5 Network Assistance API (deprecated)
     © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 
@@ -13,7 +12,7 @@ tags:
     description: '5G Media Streaming: Media Session Handling (M5) APIs: Network Assistance (deprecated)'
 
 externalDocs:
-  description: 'TS 26.512 V18.5.0; 5G Media Streaming (5GMS); Protocols'
+  description: 'TS 26.512 V18.7.0; 5G Media Streaming (5GMS); Protocols'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.512/'
 
 paths: {}
@@ -45,11 +44,11 @@ components:
         policyTemplateId:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ResourceId'
         requestedQoS:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientQosSpecification'
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientPolicySpecification'
         recommendedQoS:
           readOnly: true
           allOf:
-            - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientQosSpecification'
+            - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientPolicySpecification'
         notficationURL:
           readOnly: true
           allOf:

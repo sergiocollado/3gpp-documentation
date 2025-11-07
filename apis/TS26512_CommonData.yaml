@@ -1,16 +1,16 @@
 openapi: 3.0.0
 info:
   title: 5GMS Common Data Types
-  version: 3.1.0
+  version: 3.1.1
   description: |
     5GMS Common Data Types
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 tags:
   - name: 5GMS Common Data Types
     description: '5G Media Streaming: Common Data Types'
 externalDocs:
-  description: 'TS 26.512 V18.2.0; 5G Media Streaming (5GMS); Protocols'
+  description: 'TS 26.512 V18.6.0; 5G Media Streaming (5GMS); Protocols'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.512/'
 paths: {}
 components:

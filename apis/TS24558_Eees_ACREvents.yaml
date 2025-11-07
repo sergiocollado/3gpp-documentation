@@ -2,15 +2,15 @@ openapi: 3.0.0
 
 info:
   title: Eees_ACREvents
-  version: "1.1.0"
+  version: "1.1.1"
   description: |
     API for ACR events subscription and notification.  
-    © 2023, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  
     All rights reserved.
 
 externalDocs:
   description: >
-    3GPP TS 24.558 V18.5.1 Enabling Edge Applications; Protocol specification.
+    3GPP TS 24.558 V18.8.0 Enabling Edge Applications; Protocol specification.
   url: 'https://www.3gpp.org/ftp/Specs/archive/24_series/24.558/'
 
 security:
@@ -359,7 +359,9 @@ components:
         - eventId
 
     TargetInfo:
-      description: Details of the selected T-EAS and the T-EES.
+      description: >
+        Details of the selected T-EAS and the T-EES. The trgetEASInfo attribute shall be present,
+        although they are not specified as a mandatory due to backward compatibility reasons.
       type: object
       properties:
         trgetEASInfo:
@@ -423,4 +425,3 @@ components:
       required:
         - acrRes
         - tEasEndpoint
-

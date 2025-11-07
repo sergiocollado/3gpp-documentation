@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
   title: 3GPP 5GC NRM
-  version: 18.10.0
+  version: 18.12.0
   description: >-
     OAS 3.0.1 specification of the 5GC NRM
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 externalDocs:
   description: 3GPP TS 28.541; 5G NRM, 5GC NRM
@@ -147,8 +147,6 @@ components:
       type: array
       items:
         $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_GenericNrm.yaml#/components/schemas/Tac'
-    WeightFactor:
-      type: integer
     VendorId:
       type: string
       description: Vendor ID of the NF Service instance (Private Enterprise Number assigned by IANA)
@@ -2270,9 +2268,9 @@ components:
       description: defines the list of satellite backhaul information
       type: object
       properties:
-        globalRanNodeID:
-          $ref: '#/components/schemas/GlobalRanNodeID'
-        SatelliteBackhaulCategory:
+        nTNGlobalRanNodeID:
+          $ref: '#/components/schemas/NTNGlobalRanNodeID'
+        satelliteBackhaulCategory:
           anyOf:
           - type: string
             enum:
@@ -2289,7 +2287,7 @@ components:
         geoSatelliteId:
           type: string
           pattern: '^[0-9]{5}$'
-    GlobalRanNodeID:
+    NTNGlobalRanNodeID:
       description:  globally identification of an NG-RAN node
       type: object
       oneOf:
@@ -2342,9 +2340,47 @@ components:
         blockedLocation:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/PlmnId'
         blockedDurWindow:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/TimeWindow'
+          type: array
+          items:
+            $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/TimeWindow'
         blockedSlice:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_NrNrm.yaml#/components/schemas/Snssai'
+    SatelliteCoverageInfoList:
+      description: SatelliteCoverageInfoList that relates to NR Satellite RAT type and corresponding information of satellite coverage
+      type: array
+      items:
+        $ref: '#/components/schemas/SatelliteCoverageInfo'
+    SatelliteCoverageInfo:
+      description: This datatype defines information related to NR Satellite RAT type and corresponding information of satellite coverage
+      type: object
+      properties:
+        nRSatelliteRATtype:
+          anyOf:
+          - type: string
+            enum:
+              - NRLEO
+              - NRMEO
+              - NRGEO
+              - NROTHERSAT
+          - type: string
+        locationInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/NtnLocationInfo'
+    NtnLocationInfo:
+      description: This datatype defines the information about locations and corresponding time windows
+      type: object
+      properties:
+        location:
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/GeoArea'
+        availabilityWindows:
+          type: array
+          items:
+            $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/TimeWindow'
+        nonAvailabilityWindows:
+          type: array
+          items:
+            $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/TimeWindow'          
     5GDdnmfInfo:
       description: Information of an 5G DDNMF NF Instance
       type: object
@@ -2802,42 +2838,34 @@ components:
           type: array
           items:
             $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS29571_CommonData.yaml#/components/schemas/Dnai'
-          minItems: 1
         pduSessionTypes:
           type: array
           items:
             $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS29571_CommonData.yaml#/components/schemas/PduSessionType'
-          minItems: 1
         ipv4AddressRanges:
           type: array
           items:
             $ref: '#/components/schemas/Ipv4AddressRange'
-          minItems: 1
         ipv6PrefixRanges:
           type: array
           items:
             $ref: '#/components/schemas/Ipv6PrefixRange'
-          minItems: 1
         natedIpv4AddressRanges:
           type: array
           items:
             $ref: '#/components/schemas/Ipv4AddressRange'
-          minItems: 1
         natedIpv6PrefixRanges:
           type: array
           items:
             $ref: '#/components/schemas/Ipv6PrefixRange'
-          minItems: 1
         ipv4IndexList:
           type: array
           items:
             $ref: '#/components/schemas/IpIndex'
-          minItems: 1
         ipv6IndexList:
           type: array
           items:
             $ref: '#/components/schemas/IpIndex'
-          minItems: 1
         networkInstance:
           description: >
             The N6 Network Instance associated with the S-NSSAI and DNN.
@@ -3037,8 +3065,6 @@ components:
                       $ref: '#/components/schemas/AmfIdentifier'
                     sBIFqdn:
                       type: string
-                    weightFactor:
-                      $ref: '#/components/schemas/WeightFactor'
                     cNSIIdList:
                       $ref: '#/components/schemas/CNSIIdList'
                     amfSetRef:
@@ -3049,12 +3075,17 @@ components:
                       $ref: '#/components/schemas/CommModelList'
                     nTNPLMNRestrictionsList:
                       $ref: '#/components/schemas/NTNPLMNRestrictionsList'
+                    satelliteCoverageInfoList:
+                      $ref: '#/components/schemas/SatelliteCoverageInfoList'                      
                     amfInfo:
                       $ref: '#/components/schemas/AmfInfo'
                     sliceExpiryInfo:
                       $ref: '#/components/schemas/SliceExpiryInfo'
-                    SatelliteBackhaulInfoList:
-                      $ref: '#/components/schemas/SatelliteBackhaulInfo'
+                    satelliteBackhaulInfoList:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/SatelliteBackhaulInfo'
+                      minItems: 1
                     mappedCellIdInfoList:
                       $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_NrNrm.yaml#/components/schemas/MappedCellIdInfoList'
                     mdtUserConsentReqList:

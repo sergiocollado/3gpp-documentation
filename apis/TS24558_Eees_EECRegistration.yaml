@@ -2,15 +2,15 @@ openapi: 3.0.0
 
 info:
   title: Eees_EECRegistration
-  version: "1.1.0"
+  version: "1.1.1"
   description: |
     API for EEC registration.  
-    © 2023, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  
     All rights reserved.
 
 externalDocs:
   description: >
-    3GPP TS 24.558 V18.5.1 Enabling Edge Applications; Protocol specification.
+    3GPP TS 24.558 V18.9.0 Enabling Edge Applications; Protocol specification.
   url: 'https://www.3gpp.org/ftp/Specs/archive/24_series/24.558/'
 
 security:
@@ -399,7 +399,10 @@ components:
           $ref: '#/components/schemas/DeviceType'
 
     UnfulfilledAcProfile:
-      description: Describes AC Profile ID and reason sent by EES in EEC Register response.
+      description: >
+        Describes AC Profile ID and reason sent by EES in EEC Register response. The acId attribute
+        shall be present, although it is not specified as a mandatory due to backward
+        compatibility reasons.
       type: object
       properties:
         acId:
@@ -441,3 +444,4 @@ components:
         Possible values are:
         - CONSTRAINED_UE: Indicates UE is constrained with resources like power, processor etc.
         - NORMAL_UE: Indicates UE is not constrained with resources.
+

@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: Maf_SessionHandling (5G Media Streaming)
-  version: 1.0.0
+  version: 1.0.2
   description: |
     5GMS AF Provisioning API
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 
 tags:
@@ -12,7 +12,7 @@ tags:
     description: '5G Media Streaming: Media Session Handling APIs'
 
 externalDocs:
-  description: 'TS 26.512 V18.2.0; 5G Media Streaming (5GMS); Protocols'
+  description: 'TS 26.512 V18.7.0; 5G Media Streaming (5GMS); Protocols'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.512/'
 
 servers:

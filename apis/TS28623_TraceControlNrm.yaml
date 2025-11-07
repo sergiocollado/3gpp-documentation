@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
   title: Trace Control NRM
-  version: 18.9.0
+  version: 19.4.0
   description: >-
     OAS 3.0.1 definition of the Trace Control NRM fragment
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 externalDocs:
   description: 3GPP TS 28.623; Generic NRM,Trace Control NRM
@@ -12,8 +12,45 @@ externalDocs:
 paths: {}
 components:
   schemas:
+  #-------- Definition of types for name-containments ------
+    SubNetwork-ncO-TraceControlNrm:
+      type: object
+      properties:
+        TraceJob:
+          $ref: '#/components/schemas/TraceJob-Multiple'
+    ManagedElement-ncO-TraceControlNrm:
+      type: object
+      properties:
+        TraceJob:
+          $ref: '#/components/schemas/TraceJob-Multiple' 
+   #-------Definition of generic IOCs ----------#   
+
 #-------- Definition of types used in Trace control NRM fragment------------------
                 
+    TraceTarget:
+      type: object
+      description: Trace target conveying both the type and value of the target ID. For additional details see 3GPP TS 32.422
+      properties:
+        traceTargetType:
+          type: string
+          enum:
+            - IMSI
+            - IMEI
+            - IMEISV
+            - PUBLIC_ID
+            - UTRAN_CELL
+            - EUTRAN_CELL
+            - NGRAN_CELL
+            - ENB
+            - RNC
+            - GNB
+            - SUPI
+            - N4_SESSION_ID
+        traceTargetValueList:
+          type: array
+          items:
+            type: string
+
     jobType-Type:
       type: string
       description: Specifies whether the TraceJob represents only MDT, Logged MBSFN MDT, Trace or a combined Trace and MDT job. Applicable for Trace, MDT, RCEF and RLF reporting. See 3GPP TS 32.422 clause 5.9a for additional details.
@@ -40,8 +77,8 @@ components:
             type: string
             enum:
               - A
-              - Iu-CS
-              - Mc
+              - IU-CS
+              - MC
               - MAP-G
               - MAP-B
               - MAP-E
@@ -54,33 +91,33 @@ components:
           items:
             type: string
             enum:
-              - Mc
-              - Nb-UP
-              - Iu-UP
+              - MC
+              - NB-UP
+              - IU-UP
         RNCInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Iu-CS
-              - Iu-PS
-              - Iur
-              - Iub
-              - Uu
+              - IU-CS
+              - IU-PS
+              - IUR
+              - IUB
+              - UU
         SGSNInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Gb
-              - Iu-PS
-              - Gn
-              - MAP-Gr
-              - MAP-Gd
-              - MAP-Gf
-              - Ge
-              - Gs
-              - S6d
+              - GB
+              - IU-PS
+              - GN
+              - MAP-GR
+              - MAP-GD
+              - MAP-GF
+              - GE
+              - GS
+              - S6D
               - S4
               - S3
               - S13
@@ -89,34 +126,34 @@ components:
           items:
             type: string
             enum:
-              - Gn
-              - Gi
-              - Gmb
+              - GN
+              - GI
+              - GMB
         S-CSCFInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Mw
-              - Mg
-              - Mr
-              - Mi
+              - MW
+              - MG
+              - MR
+              - MI
         P-CSCFInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Gm
-              - Mw
+              - GM
+              - MW
         I-CSCFInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Cx
-              - Dx
-              - Mg
-              - Mw
+              - CX
+              - DX
+              - MG
+              - MW
         MRFCInterfaces:
           type: array
           items:
@@ -129,42 +166,42 @@ components:
           items:
             type: string
             enum:
-              - Mg
-              - Mj
-              - Mn
+              - MG
+              - MJ
+              - MN
         IBCFInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Ix
-              - Mx
+              - IX
+              - MX
         E-CSCFInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Mw
-              - Ml
-              - Mm
-              - Mi/Mg
+              - MW
+              - ML
+              - MM
+              - MI/MG
         BGCFInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Mi
-              - Mj
-              - Mk
+              - MI
+              - MJ
+              - MK
         ASInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Dh
-              - Sh
+              - DH
+              - SH
               - ISC
-              - Ut
+              - UT
         HSSInterfaces:
           type: array
           items:
@@ -172,12 +209,12 @@ components:
             enum:
               - MAP-C
               - MAP-D
-              - Gc
-              - Gr
-              - Cx
-              - S6d
-              - S6a
-              - Sh
+              - GC
+              - GR
+              - CX
+              - S6D
+              - S6A
+              - SH
               - N70
               - N71
               - NU1
@@ -188,13 +225,13 @@ components:
             enum:
               - MAP-F
               - S13
-              - MAP-Gf
+              - MAP-GF
         BM-SCInterfaces:
           type: array
           items:
             type: string
             enum:
-              - Gmb
+              - GMB
         MMEInterfaces:
           type: array
           items:
@@ -202,7 +239,7 @@ components:
             enum:
               - S1-MME
               - S3
-              - S6a
+              - S6A
               - S10
               - S11
               - S13
@@ -215,20 +252,20 @@ components:
               - S5
               - S8
               - S11
-              - Gxc
+              - GXC
         PDN_GWInterfaces:
           type: array
           items:
             type: string
             enum:
-              - S2a
-              - S2b
-              - S2c
+              - S2A
+              - S2B
+              - S2C
               - S5
-              - S6b
-              - Gx
+              - S6B
+              - GX
               - S8
-              - SGi
+              - SGI
         eNBInterfaces:
           type: array
           items:
@@ -243,7 +280,7 @@ components:
             enum:
               - S1-MME
               - X2
-              - Uu
+              - UU
               - F1-C
               - E1
         AMFInterfaces:
@@ -343,16 +380,16 @@ components:
             type: string
             enum:
               - NG-C
-              - Xn-C
-              - Uu
+              - XN-C
+              - UU
         gNB-CU-CPInterfaces:
           type: array
           items:
             type: string
             enum:
               - NG-C
-              - Xn-C
-              - Uu
+              - XN-C
+              - UU
               - F1-C
               - E1
               - X2-C
@@ -372,6 +409,7 @@ components:
     listOfNeTypes-Type:
       description: The Network Element types where Trace Session activation is needed. See 3GPP TS 32.422 clause 5.4 for additional details.
       type: array
+      uniqueItems: true
       items:
         type: string
         enum:
@@ -410,9 +448,9 @@ components:
     listOfTraceMetrics:
       description: The trace metrics to be reported. See 3GPP TS 32.422 clause 10 for additional details.
       type: array
+      uniqueItems: true
       items:
         type: string 
-      
 
     traceDepth-Type:
       description: Specifies how detailed information should be recorded in the Network Element. The Trace Depth is a paremeter for Trace Session level, i.e., the Trace Depth is the same for all of the NEs to be traced in the same Trace Session. See 3GPP TS 32.422 clause 5.3 for additional details.
@@ -441,30 +479,9 @@ components:
       type: string
       description: Specifies whether file-based or streaming reporting shall be used for this Trace Session. See 3GPP TS 32.422 clause 5.11 for additional details.
       enum:
-        - FILE-BASED
+        - FILE_BASED
         - STREAMING
-      default: FILE-BASED   
-
-    traceTarget-Type:
-      type: object
-      description: Trace target conveying both the type and value of the target ID. For additional details see 3GPP TS 32.422
-      properties:
-        TargetIdType:
-          type: string
-          enum:
-            - IMSI
-            - IMEI
-            - IMEISV
-            - PUBLIC_ID
-            - UTRAN_CELL
-            - E-UTRAN_CELL
-            - NG-RAN_CELL
-            - eNB
-            - RNC
-            - gNB
-            - SUPI
-        TargetIdValue:
-          type: string
+      default: FILE_BASED
     
     triggeringEvents-Type:
       type: object
@@ -477,7 +494,7 @@ components:
             enum:
               - MO_MT_CALLS
               - MO_MT_SMS
-              - LU_IMSIattach_IMSIdetach
+              - LU_IMSIATTACH_IMSIDETACH
               - HANDOVER
               - SS
         SGSN:
@@ -485,10 +502,10 @@ components:
           items:
             type: string
             enum:
-              - PDPcontext
+              - PDPCONTEXT
               - MO_MT_SMS
-              - RAU_GPRSattach_GPRSdetach
-              - MBMScontext
+              - RAU_GPRSATTACH_GPRSDETACH
+              - MBMSCONTEXT
         MGW:
           type: array
           items:
@@ -500,134 +517,134 @@ components:
           items:
             type: string
             enum:
-              - PDPcontext
-              - MBMScontext
+              - PDPCONTEXT
+              - MBMSCONTEXT
         IMS:
           type: array
           items:
             type: string
             enum:
-              - SIPsession_StandaloneTransaction
+              - SIPSESSION_STANDALONETRANSACTION
         BM_SC:
           type: array
           items:
             type: string
             enum:
-              - MBMSactivation
+              - MBMSACTIVATION
         MME:
           type: array
           items:
             type: string
             enum:
-              - UEinitiatedPDNconnectivityRequest
-              - ServiceRequest
-              - InitialAttach_TAU_Detach
-              - UEinitiatedPDNdisconnection
-              - BearerActivationModificationDeletion
-              - Handover
+              - UE_INITIATEDPDN_CONNECTIVITY_REQUEST
+              - SERVICE_REQUEST
+              - INITIALATTACH_TAU_DETACH
+              - UE_INITIATEDPDN_DISCONNECTION
+              - BEAR_ACTIVIATION_MODIFICATION_DELETION
+              - HANDOVER
         SGW:
           type: array
           items:
             type: string
             enum:
-              - PDNconnectionCreation
-              - PDNconnectionTermination
-              - BearerActivationModificationDeletion
+              - PDN_CONNECTION_CREATION
+              - PDN_CONNECTION_TERMINATION
+              - BEAR_ACTIVATION_MODIFICATION_DELETION
         PGW:
           type: array
           items:
             type: string
             enum:
-              - PDNconnectionCreation
-              - PDNconnectionTermination
-              - BearerActivationModificationDeletion
+              - PDN_CONNECTION_CREATION
+              - PDN_CONNECTION_TERMINATION
+              - BEAR_ACTIVATION_MODIFICATION_DELETION
         AMF:
           type: array
           items:
             type: string
             enum:
-              - Registration
-              - ServiceRequest
-              - Handover
-              - UEderegistration
-              - NetworkDeregistration
-              - UEMobilityFromEPC
-              - UEMobilityToEPC
-              - ConvergedChargingService
+              - REGISTRATION
+              - SERVICE_REQUEST
+              - HANDOVER
+              - UE_DEREGISTRATION
+              - NETWORK_DEREGISTRATION
+              - UE_MOBILITY_FROM_EPC
+              - UE_MOBILITY_TO_EPC
+              - CONVERGED_CHARGING_SERVICE
         SMF:
           type: array
           items:
             type: string
             enum:
-              - PDUsessionEstablishment
-              - PDUsessionModification
-              - PDUsessionRelease
-              - PDUsessionUPactivationDeactivation
-              - MobilityBtw3gppAndN3gppTo5GC
-              - MobilityFromEpc
-              - MobilityBtwISMForVSMF
-              - ConvergedChargingService
-              - OfflineOnlyCharging
+              - PDU_SESSION_ESTABLISHMENT
+              - PDU_SESSION_MODIFICATION
+              - PDU_SESSIOON_RELEASE
+              - PDU_SESSION_UP_ACTIVATION_DEACTIVATION
+              - MOBILITY_BTW_3GPP_AND_N3GPP_TO_5GC
+              - MOBILITY_FROM_EPC
+              - MOBILITY_BTW_ISMF_OR_VSMF
+              - CONVERGED_CHARGING_SERVICE
+              - OFFLINE_ONLY_CHARGING
         PCF:
           type: array
           items:
             type: string
             enum:
-              - AMpolicy
-              - SMpolicy
-              - Authorization
-              - BDTpolicy
-              - SpendingLimitControl
+              - AM_POLICY
+              - SM_POLICY
+              - AUTHORIZATION
+              - BDT_POLICY
+              - SPENDING_LIMIT_CONTROL
         UPF:
           type: array
           items:
             type: string
             enum:
-              - N4Session
+              - N4SESSION
         AUSF:
           type: array
           items:
             type: string
             enum:
-              - UEauthentication
+              - UE_AUTHENTICATION
         NEF:
           type: array
           items:
             type: string
             enum:
-              - EventExposure
-              - PFDmanagement
-              - ParameterProvision
-              - Trigger
+              - EVENT_EXPOSURE
+              - PFD_MANAGEMENT
+              - PARAMETER_PROVISION
+              - TRIGGER
         NRF:
           type: array
           items:
             type: string
             enum:
-              - NFmanagement
-              - NFdiscovery
+              - NF_MANAGEMEENT
+              - NF_DISCOVERY
         NSSF:
           type: array
           items:
             type: string
             enum:
-              - NSSelection
+              - NS_SELECTION
               - NSSAI
         SMSF:
           type: array
           items:
             type: string
             enum:
-              - SMservice
+              - SMSERVICE
         UDM:
           type: array
           items:
             type: string
             enum:
-              - UEcontext
-              - SubscriberData
-              - UEauthentication
-              - EventExposure
+              - UE_CONTEXT
+              - SUBSCRIBER_DATA
+              - UE_AUTHENTICATION
+              - EVENT_EXPOSURE
     
     anonymizationOfMdtData-Type:
       description: Specifies level of MDT anonymization. For additional details see 3GPP TS 32.422 clause 5.10.12.
@@ -952,10 +969,9 @@ components:
       description: See details in 3GPP TS 32.422 clause 5.10.15.
       type: string
       enum:
-        - CPICH_EcNo
+        - CPICH_ECNO
         - CPICH_RSCP
-        - PathLoss
-
+        - PATHLOSS
     eventThresholdUphUMTS-Type:
       description: See details in 3GPP TS 32.422 clause 5.10.39.
       type: integer
@@ -965,6 +981,7 @@ components:
     plmnList-Type:
       description: See details in 3GPP TS 32.422 clause 5.10.24.
       type: array
+      uniqueItems: true
       items:
         type: object
         properties:
@@ -1210,6 +1227,7 @@ components:
     sensorInformation-Type:
       description: See details in 3GPP TS 32.422 clause 5.10.29.
       type: array
+      uniqueItems: true
       items:
         type: string
         enum:
@@ -1253,6 +1271,7 @@ components:
     excessPacketDelayThresholds-Type:
       description: Array of type excessPacketDelayThreshold-Type.
       type: array
+      uniqueItems: true
       items:
         $ref: '#/components/schemas/excessPacketDelayThreshold-Type'
       minItems: 0
@@ -1352,22 +1371,23 @@ components:
           $ref: '#/components/schemas/timeToTriggerL1-Type'
         mbsfnAreaList:
           type: array
+          uniqueItems: true
           items:
             $ref: '#/components/schemas/MbsfnArea'
           maxItems: 8
         reportType:
           $ref: '#/components/schemas/reportType-Type'
-        plmnList:
-          $ref: '#/components/schemas/plmnList-Type'
         eventListForEventTriggeredMeasurement:
           $ref: '#/components/schemas/eventListForEventTriggeredMeasurement-Type'
         areaConfigurationForNeighCell:
           type: array
+          uniqueItems: true
           items:
             $ref: '#/components/schemas/AreaConfig'
           maxItems: 32
         nPNIdentityList:
           type: array
+          uniqueItems: true
           items:
             $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_GenericNrm.yaml#/components/schemas/NpnId-Type'
 
@@ -1379,6 +1399,7 @@ components:
           $ref: '#/components/schemas/anonymizationOfMdtData-Type'
         areaScope:
           type: array
+          uniqueItems: true
           items:
             $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_GenericNrm.yaml#/components/schemas/AreaScope'
         sensorInformation:
@@ -1387,15 +1408,18 @@ components:
           $ref: '#/components/schemas/immediateMDTConfig-Type'
         loggedMDTConfig:
           $ref: '#/components/schemas/loggedMDTConfig-Type'
+        plmnList:
+          $ref: '#/components/schemas/plmnList-Type'
 
     UECoreMeasConfig-Type:
       description: UE level measurements configuration parameters for 5G system. See details in 3GPP TS 28.622 clause 4.3.x.
       type: object
       properties:
         ueCoreMeasurements:
-          type: array 
+          type: array
           items:
             type: string
+          minItems: 1
         ueCoreMeasGranularityPeriod:
           type: integer
         nfTypeToMeasure:
@@ -1404,6 +1428,32 @@ components:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DnList'
         rootObjectInstances:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DnList'
+
+    AreaScope:
+      oneOf:
+      - type: array
+        uniqueItems: true
+        items:
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/EutraCellId'
+      - type: array
+        uniqueItems: true
+        items:
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/NrCellId'
+      - type: array
+        uniqueItems: true
+        items:
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Tac'
+      - type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/Tai'
+      - type: array
+        uniqueItems: true
+        items:
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_GenericNrm.yaml#/components/schemas/NpnId-Type'
+      - type: array
+        items:
+          $ref: '#/components/schemas/PLMNInfo'          
 
     Tai:
       type: object
@@ -1414,7 +1464,15 @@ components:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Mnc'
         tac:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Tac'
-
+    PLMNInfo:
+      type: object
+      properties:
+        plmnId:
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/PlmnId'
+        sNSSAI:
+          type: array
+          items:
+            $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_NrNrm.yaml#/components/schemas/Snssai'
     AreaConfig:
       type: object
       properties:
@@ -1422,8 +1480,13 @@ components:
           $ref: '#/components/schemas/FreqInfo'
         pciList:
           type: array
+          uniqueItems: true
           items:
             type: integer
+            minimum: 0
+            maximum: 1007
+          minItems: 1
+          maxItems: 32
     FreqInfo:
       description: specifies the carrier frequency and bands used in a cell.
       type: object
@@ -1432,8 +1495,10 @@ components:
           type: integer
         freqBands:
           type: array
+          uniqueItems: true
           items: 
             type: integer
+          minItems: 1
     MbsfnArea:
       type: object
       properties:
@@ -1455,6 +1520,7 @@ components:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_GenericNrm.yaml#/components/schemas/NpnId-Type'
         listOfTraceMetrics:
           type: array
+          uniqueItems: true
           items:
             type: string
         traceReportingConsumerUri:
@@ -1468,7 +1534,7 @@ components:
         traceReportingFormat:
           $ref: '#/components/schemas/traceReportingFormat-Type'
         traceTarget:
-          $ref: '#/components/schemas/traceTarget-Type'
+          $ref: '#/components/schemas/TraceTarget'
         traceConfig:
           $ref: '#/components/schemas/traceConfig-Type'
         mdtConfig:

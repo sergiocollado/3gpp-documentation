@@ -2,14 +2,14 @@ openapi: 3.0.0
 
 info:
   title: Nnwdaf_RoamingData
-  version: 1.0.1
+  version: 1.0.2
   description: |
     Nnwdaf_RoamingData API Service.  
     © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  
     All rights reserved.
 
 externalDocs:
-  description: 3GPP TS 29.520 V18.9.0; 5G System; Network Data Analytics Services.
+  description: 3GPP TS 29.520 V18.10.0; 5G System; Network Data Analytics Services.
   url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.520/
 
 servers:

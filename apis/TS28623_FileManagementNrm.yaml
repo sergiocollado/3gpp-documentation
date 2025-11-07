@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: File Management NRM
-  version: 18.9.0
+  version: 19.2.0
   description: >-
     OAS 3.0.1 definition of the File Management NRM fragment
     © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
@@ -12,6 +12,25 @@ externalDocs:
 paths: {}
 components:
   schemas:
+
+  #-------- Definition of types for name-containments ------
+    SubNetwork-ncO-FileManagementNrm:
+      type: object
+      properties:
+        FileDownloadJob:
+          $ref: '#/components/schemas/FileDownloadJob-Multiple'
+        Files:
+          $ref: '#/components/schemas/Files-Multiple'
+    ManagedElement-ncO-FileManagementNrm:
+      type: object
+      properties:
+        FileDownloadJob:
+          $ref: '#/components/schemas/FileDownloadJob-Multiple'
+        Files:
+          $ref: '#/components/schemas/Files-Multiple'      
+   #-------Definition of generic IOCs ----------#  
+
+
 #-------- Definition of types-----------------------------------------------------
     FileDownloadJobProcessMonitor:
       description: >-
@@ -21,8 +40,10 @@ components:
       properties:
         id:
           type: string
+          readOnly: true
         status:
           type: string
+          readOnly: true
           enum:
             - NOT_STARTED
             - RUNNING
@@ -32,13 +53,16 @@ components:
             - CANCELLED
         progressPercentage:
           type: integer
+          readOnly: true
           minimum: 0
           maximum: 100
         progressStateInfo:
+          readOnly: true
           type: string
         resultStateInfo:
           oneOf:
             - type: string
+              readOnly: true
               enum:
                 - NULL
                 - UNKNOWN
@@ -50,10 +74,11 @@ components:
                 - TIMER_EXPIRED
                 - OTHER
             - type: string
+              readOnly: true
         startTime:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTime'
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTimeRo'
         endTime:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTime'
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTimeRo'
         timer:
           type: integer
 
@@ -90,10 +115,12 @@ components:
               properties:
                 numberOfFiles:
                   type: integer
+                  readOnly: true
                 jobRef:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Dn'
+                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DnRo'
                 jobId:
                   type: string
+                  readOnly: true
                 File:
                   $ref: '#/components/schemas/File-Multiple'
     File-Single:
@@ -105,13 +132,16 @@ components:
               type: object
               properties:
                 fileLocation:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Uri'
+                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/UriRo'
                 fileCompression:
                   type: string
+                  readOnly: true
                 fileSize:
                   type: integer
+                  readOnly: true
                 fileDataType:
                   type: string
+                  readOnly: true
                   enum:
                     - PERFORMANCE
                     - TRACE
@@ -119,16 +149,19 @@ components:
                     - PROPRIETARY
                 fileFormat:
                   type: string
+                  readOnly: true
                 fileReadyTime:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTime'
+                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTimeRo'
                 fileExpirationTime:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTime'
+                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DateTimeRo'
                 fileContent:
                   type: string
+                  readOnly: true
                 jobRef:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Dn'
+                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/DnRo'
                 jobId:
                   type: string
+                  readOnly: true
  
             
 

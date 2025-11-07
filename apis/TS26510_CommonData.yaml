@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: 'Media Delivery: Common Data Types'
-  version: 1.0.1
+  version: 1.0.3
   description: |
     Media Delivery: Common Data Types
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 
 tags:
@@ -12,7 +12,7 @@ tags:
     description: 'Media Delivery: Common Data Types'
 
 externalDocs:
-  description: 'TS 26.510 V18.1.0; Media Delivery; Interactions and APIs for media session handling'
+  description: 'TS 26.510 V18.5.0; Media Delivery; Interactions and APIs for media session handling'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.510/'
 
 paths: {}
@@ -130,7 +130,7 @@ components:
         pduSetQosLimits:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS29571_CommonData.yaml#/components/schemas/PduSetQosPara'
 
-    QosRange:
+    PolicyConstraints:
       type: object
       required:
         - componentReference
@@ -166,7 +166,7 @@ components:
         minimumRequestedBitRate:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS29571_CommonData.yaml#/components/schemas/BitRate'
 
-    ClientQosSpecification:
+    ClientPolicySpecification:
       type: object
       required:
         - downlinkBitRates

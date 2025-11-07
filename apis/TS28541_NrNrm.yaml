@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
   title: NR NRM
-  version: 18.10.0
+  version: 18.13.0
   description: >-
     OAS 3.0.1 specification of the NR NRM
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 externalDocs:
   description: 3GPP TS 28.541; 5G NRM, NR NRM
@@ -167,19 +167,11 @@ components:
           type: integer
           minimum: 0
           maximum: 100
-        maxNumberOfPreamblesSent:
-          enum:
-            - n3
-            - n4
-            - n5
-            - n6
-            - n7
-            - n8
-            - n10
-            - n20
-            - n50
-            - n100
-            - n200
+        numberOfPreamblesSent:
+          type: integer
+          minimum: 0
+          maximum: 200
+
 
     UeAccDelayProbabilityDist:
       type: array
@@ -246,10 +238,8 @@ components:
     CyclicPrefix:
       type: string
       enum:
-        - '15'
-        - '30'
-        - '60'
-        - '120'
+        - NORMAL,
+        - EXTENDED
     TxDirection:
       type: string
       enum:
@@ -267,8 +257,6 @@ components:
       enum:
         - INITIAL
         - OTHER
-        - SUL
-
     IsESCoveredBy:
       type: string
       enum:
@@ -573,12 +561,6 @@ components:
             type: integer
           minValue:
             type: integer
-
-    NTNTAClist:
-      type: array
-      items:
-        $ref: '#/components/schemas/NrTac'
-    
     Ephemeris:
       type: object
       oneOf:
@@ -739,7 +721,10 @@ components:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_5GcNrm.yaml#/components/schemas/Dynamic5QISet-Multiple'
         CCOFunction:
           $ref: '#/components/schemas/CCOFunction-Single'
-
+        NTNFunction:
+          $ref: '#/components/schemas/NTNFunction-Single'
+        NRECMappingRule:
+          $ref: '#/components/schemas/NRECMappingRule-Multiple'
     ManagedElement-ncO-NrNrm:
       type: object
       properties:
@@ -767,6 +752,10 @@ components:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_5GcNrm.yaml#/components/schemas/Configurable5QISet-Multiple'
         Dynamic5QISet:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28541_5GcNrm.yaml#/components/schemas/Dynamic5QISet-Multiple'
+        NTNFunction:
+          $ref: '#/components/schemas/NTNFunction-Single'
+        NRECMappingRule:
+          $ref: '#/components/schemas/NRECMappingRule-Multiple'
 
 #-------- Definition of abstract IOCs --------------------------------------------
 
@@ -925,7 +914,7 @@ components:
                       $ref: '#/components/schemas/GGnbIdList'
                     x2HOBlockList:
                       $ref: '#/components/schemas/GEnbIdList'
-                    xnHOBlackList:
+                    xnHOBlockList:
                       $ref: '#/components/schemas/GGnbIdList'
                     mappingSetIDBackhaulAddress:
                       type: array
@@ -1124,7 +1113,7 @@ components:
         - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_GenericNrm.yaml#/components/schemas/Top'
         - type: object
           properties:
-            bWPlist:
+            bWPList:
               type: array
               items:
                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/Dn'
@@ -2007,7 +1996,9 @@ components:
               type: object
               properties:
                 coverageShapeList:
-                  type: integer
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CoverageShape'
                 downlinkTransmitPowerRange:
                   $ref: '#/components/schemas/ParameterRange'
                 antennaTiltRange:
@@ -2020,19 +2011,13 @@ components:
                   $ref: '#/components/schemas/ParameterRange'
 
     CCOWeakCoverageParameters-Single:
-      allOf:
-        - $ref: '#/components/schemas/CCOParameters-Attr'
-        - type: object
+      $ref: '#/components/schemas/CCOParameters-Attr'
 
     CCOPilotPollutionParameters-Single:
-      allOf:
-        - $ref: '#/components/schemas/CCOParameters-Attr'
-        - type: object
+      $ref: '#/components/schemas/CCOParameters-Attr'
     
     CCOOvershootCoverageParameters-Single:
-      allOf:
-        - $ref: '#/components/schemas/CCOParameters-Attr'
-        - type: object
+      $ref: '#/components/schemas/CCOParameters-Attr'
     
     NTNFunction-Single:
       allOf:

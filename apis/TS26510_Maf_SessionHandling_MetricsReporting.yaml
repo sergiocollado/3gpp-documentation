@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: Maf_SessionHandling_MetricsReporting
-  version: 1.0.0
+  version: 1.0.1
   description: |
     Media Delivery: Metrics Reporting API
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 
 tags:
@@ -12,7 +12,7 @@ tags:
     description: 'Media Delivery: Metrics Reporting API'
 
 externalDocs:
-  description: 'TS 26.510 V18.0.0; Media Delivery; Interactions and APIs for media session handling'
+  description: 'TS 26.510 V18.4.0; Media Delivery; Interactions and APIs for media session handling'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.510/'
 
 servers:

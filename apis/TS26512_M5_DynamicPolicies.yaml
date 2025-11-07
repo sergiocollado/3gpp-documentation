@@ -1,10 +1,9 @@
 openapi: 3.0.0
-
 info:
-  title: M5_DynamicPolicies (deprecated)
-  version: 3.0.2
+  title: M5_DynamicPolicies
+  version: 3.0.4
   description: |
-    5GMS AF M5 Dynamic Policy API
+    5GMS AF M5 Dynamic Policy API (deprecated)
     © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 
@@ -13,7 +12,7 @@ tags:
     description: '5G Media Streaming: Media Session Handling (M5) APIs: Dynamic Policies (deprecated)'
 
 externalDocs:
-  description: 'TS 26.512 V18.5.0; 5G Media Streaming (5GMS); Protocols'
+  description: 'TS 26.512 V18.7.0; 5G Media Streaming (5GMS); Protocols'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.512/'
 
 paths: {}
@@ -45,10 +44,11 @@ components:
         provisioningSessionId:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ResourceId'
         qosSpecification:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientQosSpecification'
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientPolicySpecification'
         enforcementMethod:
           readOnly: true
           type: string
         enforcementBitRate:
           readOnly: true
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS29571_CommonData.yaml#/components/schemas/Uinteger'
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS29571_CommonData.yaml#/components/schemas/Uinteger'

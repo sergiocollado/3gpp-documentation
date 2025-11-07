@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: Maf_Provisioning_PolicyTemplates
-  version: 1.0.1
+  version: 1.0.3
   description: |
     Media Delivery: Policy Templates Provisioning API
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 
 tags:
@@ -12,7 +12,7 @@ tags:
     description: 'Media Delivery: Policy Templates Provisioning API'
 
 externalDocs:
-  description: 'TS 26.510 V18.1.0; Media Delivery; Interactions and APIs for media session handling'
+  description: 'TS 26.510 V18.5.0; Media Delivery; Interactions and APIs for media session handling'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.510/'
 
 servers:
@@ -318,7 +318,7 @@ components:
           type: array
           minItems: 1
           items:
-            $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/QosRange'
+            $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/PolicyConstraints'
         chargingSpecification:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ChargingSpecification'
         bdtPolicyId:

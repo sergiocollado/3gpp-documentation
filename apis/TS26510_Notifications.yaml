@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: 'Media Delivery: Notifications'
-  version: 1.1,0
+  version: 1.1.1
   description: |
     Media Delivery: Notifications
     © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
@@ -12,7 +12,7 @@ tags:
     description: 'Media Delivery: Asynchronous MQTT notifications sent by the Media AF at reference points M3 and M5'
 
 externalDocs:
-  description: 'TS 26.510 V18.2.0; Media Delivery; Interactions and APIs for media session handling'
+  description: 'TS 26.510 V18.4.0; Media Delivery; Interactions and APIs for media session handling'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.510/'
 
 paths: {}

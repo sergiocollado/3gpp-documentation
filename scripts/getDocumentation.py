@@ -118,6 +118,7 @@ for doc in configuration:
         for index in idArray:
             id = index
             getSeriesURL = "https://www.etsi.org/deliver/etsi_ts/1" +str(serie) + str(docgroup) + "00_1" +str(serie) + str(docgroup) + "99/1" +str(serie) + str(docId) +"/" + str(relase).zfill(2) + "." + str(id) + "/"
+            print(getSeriesURL)
             pdfFile = re.search(r"\/(\w+).pdf", getURLAsString(getSeriesURL))
             zipFile = re.search(r"\/(\w+).zip", getURLAsString(getSeriesURL))
             if not pdfFile or (not zipFile and requiredAPI):

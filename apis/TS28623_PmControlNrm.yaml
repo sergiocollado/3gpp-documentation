@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: PM control NRM 
-  version: 18.9.0
+  version: 19.2.0
   description: >-
     OAS 3.0.1 definition of the PM control NRM fragment
     © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
@@ -12,6 +12,19 @@ externalDocs:
 paths: {}
 components:
   schemas:
+  #-------- Definition of types for name-containments ------
+    SubNetwork-ncO-PmControlNrm:
+      type: object
+      properties:
+        PerfMetricJob:
+          $ref: '#/components/schemas/PerfMetricJob-Multiple'
+    ManagedElement-PmControlNrm:
+      type: object
+      properties:
+        PerfMetricJob:
+          $ref: '#/components/schemas/PerfMetricJob-Multiple'   
+   #-------Definition of generic IOCs ----------#  
+  
 #-------- Definition of types-----------------------------------------------------
 
 
@@ -34,8 +47,10 @@ components:
                   type: string
                 performanceMetrics:
                   type: array
+                  uniqueItems: true
                   items:
                     type: string
+                  minItems: 1
                 granularityPeriod:
                   type: integer
                   minimum: 1

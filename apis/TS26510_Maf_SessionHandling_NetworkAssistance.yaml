@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: Maf_SessionHandling_NetworkAssistance
-  version: 1.0.1
+  version: 1.0.3
   description: |
     Media Delivery: Network Assistance API
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 
 tags:
@@ -12,7 +12,7 @@ tags:
     description: 'Media Delivery: Network Assistance API'
 
 externalDocs:
-  description: 'TS 26.510 V18.1.0; Media Delivery; Interactions and APIs for media session handling'
+  description: 'TS 26.510 V18.5.0; Media Delivery; Interactions and APIs for media session handling'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.510/'
 
 servers:
@@ -276,7 +276,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientQosSpecification'
+                  $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientPolicySpecification'
         '400': # Bad Request: The syntax of the HTTP request is malformed in a way not covered by one of the following more specific client errors
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS29571_CommonData.yaml#/components/responses/400'
         '401': # Unauthorized
@@ -406,8 +406,8 @@ components:
         applicationFlowDescription:
           $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ApplicationFlowDescription'
         requestedQoS:
-          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientQosSpecification'
+          $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientPolicySpecification'
         recommendedQoS:
           readOnly: true
           allOf:
-            - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientQosSpecification'
+            - $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS26510_CommonData.yaml#/components/schemas/ClientPolicySpecification'

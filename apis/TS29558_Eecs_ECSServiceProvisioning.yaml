@@ -2,7 +2,7 @@ openapi: 3.0.0
 
 info:
   title: ECS Service Provisioning Service
-  version: 1.0.2
+  version: 1.0.3
   description: |
     ECS Service Provisioning Service.  
     © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).  
@@ -10,7 +10,7 @@ info:
 
 externalDocs:
   description: >
-    3GPP TS 29.558 V18.9.0; Enabling Edge Applications;
+    3GPP TS 29.558 V18.10.0; Enabling Edge Applications;
     Application Programming Interface (API) specification; Stage 3.
   url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.558/
 

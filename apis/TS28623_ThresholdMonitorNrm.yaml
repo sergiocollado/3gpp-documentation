@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Threshold Monitor NRM 
-  version: 18.2.0
+  version: 19.2.0
   description: >-
     OAS 3.0.1 definition of the Threshold Monitor NRM fragment
     © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
@@ -12,14 +12,29 @@ externalDocs:
 paths: {}
 components:
   schemas:
+  #-------- Definition of types for name-containments ------
+    SubNetwork-ncO-ThresholdMonitorNrm:
+      type: object
+      properties:
+        ThresholdMonitor:
+          $ref: '#/components/schemas/ThresholdMonitor-Multiple'
+    ManagedElement-ncO-ThresholdMonitorNrm:
+      type: object
+      properties:
+        ThresholdMonitor:
+          $ref: '#/components/schemas/ThresholdMonitor-Multiple' 
+   #-------Definition of generic IOCs ----------#   
+
 #-------- Definition of types-----------------------------------------------------
     ThresholdInfo:
       type: object
       properties:
         performanceMetrics:
           type: array
+          uniqueItems: true
           items:
             type: string
+          minItems: 1
         thresholdDirection:
           type: string
           enum:
@@ -53,8 +68,10 @@ components:
                   $ref: 'https://raw.githubusercontent.com/emanuelfreitas/3gpp-documentation/master/apis/TS28623_ComDefs.yaml#/components/schemas/OperationalState'
                 thresholdInfoList:
                   type: array
+                  uniqueItems: true
                   items:
                     $ref: '#/components/schemas/ThresholdInfo'
+                  minItems: 1
                 monitorGranularityPeriod:
                   type: integer
                   minimum: 1

@@ -2,10 +2,10 @@ openapi: 3.0.0
 
 info:
   title: 5GMS R4 Data Reporting data types
-  version: 2.0.1
+  version: 2.0.2
   description: |
     5GMS R4 Data Reporting data types
-    © 2024, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    © 2025, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
     All rights reserved.
 
 tags:
@@ -13,7 +13,7 @@ tags:
     description: '5G Media Streaming: R4 Data Reporting data types'
 
 externalDocs:
-  description: 'TS 26.512 V18.2.0; 5G Media Streaming (5GMS); Protocols'
+  description: 'TS 26.512 V18.6.0; 5G Media Streaming (5GMS); Protocols'
   url: 'https://www.3gpp.org/ftp/Specs/archive/26_series/26.512/'
 
 paths: {}
